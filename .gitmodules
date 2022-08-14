@@ -1,0 +1,3 @@
+[submodule "RPMidi"]
+	path = RPMidi
+	url = git@github.com:jpschafer/RPMidi.git
