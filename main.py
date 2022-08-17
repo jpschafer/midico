@@ -1,5 +1,5 @@
 ## Micropython Default
-from machine import Pin
+from machine import Pin, PWM
 from time import sleep
 import time
 
@@ -7,9 +7,48 @@ import time
 from rpmidi import RPMidi
 from songs import SongData
 
+# Tick Tock Sound Options
+
+#{
+#    key1:{
+        
+#    key2:value2, ...}
+#
+
+analog_click = 0.001
+short_digital_beep = 0.005
+medium_digital_beep = 0.001
+long_digital_beep = 0.05
+wtf_digital_beep = 0.1
+
+# Interesting frequency combos
+# medium w/ 500
+# long w/ 1000
 ## Setup Pins
+buzzer1 = PWM(Pin(16))
+buzzer2 = PWM(Pin(17))
+buzzer3 = PWM(Pin(18))
+buzzer4 = PWM(Pin(19))
 led = Pin(25, Pin.OUT)
 
+def play_tick():
+    buzzer1.duty_u16(1000)
+    buzzer1.freq(1000)
+    
+    buzzer2.duty_u16(1000)
+    buzzer2.freq(1000)
+    
+    buzzer3.duty_u16(1000)
+    buzzer3.freq(1000)
+    
+    buzzer4.duty_u16(1000)
+    buzzer4.freq(1000)
+    
+    sleep(analog_click)
+    buzzer1.duty_u16(0)
+    buzzer2.duty_u16(0)
+    buzzer3.duty_u16(0)
+    buzzer4.duty_u16(0)
 def print_time(t):
     hr_12 = t[3] % 12
     if hr_12 == 0:
@@ -22,8 +61,12 @@ def print_time(t):
 def play_midi():
     print("Playing midi...")
     midi = RPMidi() # Instantiate RPMidi
+    
+    #f = open("enigmatic_encounter_edited.bin", "rb")
+    #print (f.read(1))
+    #midi.play_song(f)
     songs = SongData() # Load songs. See songs.py
-    midi.play_song(songs.morning_music()) # Konami Bubble System "Morning Musi
+    midi.play_song(songs.enigmatic_encounter()) # Last Breath, on a Pico!
     
 ## Start Main loop
 def main():
@@ -45,6 +88,7 @@ def main():
         
         if sec != old_sec:
             old_sec = sec
+            play_tick()
             print_time(t)
         if min != old_min:
             old_min = min
