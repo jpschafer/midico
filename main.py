@@ -26,12 +26,13 @@ wtf_digital_beep = 0.1
 # long w/ 1000
 
 ## Setup Pins
+## Pins are ordered by top to bottom on both the pico board and buzzers on the perfboard for logical consistency, has no programmatic bearing (I hope lol)
 buzzers = [
-    PWM(Pin(16)),
-    PWM(Pin(17)),
-    PWM(Pin(18)),
-    PWM(Pin(19)),
-    PWM(Pin(20))
+    PWM(Pin(0)),  # Pin 1
+    PWM(Pin(3)),  # Pin 5
+    PWM(Pin(6)),  # Pin 9
+    PWM(Pin(11)), # Pin 15
+    PWM(Pin(15))  # Pin 20
 ]
 
 led = Pin(25, Pin.OUT)
