@@ -56,7 +56,7 @@ led = Pin(25, Pin.OUT)
 def play_tick():
     for buzzer in buzzers:
         buzzer.duty_u16(1000)
-        buzzer.freq(1000) 
+        buzzer.freq(1000)
     
     sleep(medium_digital_beep)
     
@@ -88,9 +88,10 @@ def play_midi(song_list):
     midi = RPMidi() # Instantiate RPMidi
     
     # Pick a random midi from list
-    file_name = "/music/" + random.choice(song_list)
-    print("Playing %s" % file_name)
-    f = open(file_name, "rb")
+    file_name = random.choice(song_list)
+    full_path = "/music/" + file_name
+    print("Playing %s" % full_path)
+    f = open(full_path, "rb")
     midi.play_song(f)
     
 def generate_song_list():
@@ -113,6 +114,7 @@ def main():
     
     #Generate list of songs to play
     song_list=generate_song_list()
+
     ## Loop
     while True:
         t = time.localtime()
