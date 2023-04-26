@@ -5,7 +5,6 @@ import time, random, os
 
 ## RPMidi
 from rpmidi import RPMidi
-from songs import SongData
 
 # Tick Tock Sound Options
 
@@ -97,7 +96,6 @@ def generate_song_list():
     song_list = []
     for file in os.listdir("/music"):
         # check only text files
-        print(file)
         if file.endswith('.bin'):
             song_list.append(file)
     return song_list
