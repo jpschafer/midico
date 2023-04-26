@@ -86,7 +86,7 @@ def play_midi(song_list):
     midi = RPMidi() # Instantiate RPMidi
     
     # Pick a random midi from list
-    #file_name = "/music/" + "The-Flight-Of-The-Bumble-Bee.bin"
+    #file_name = "/music/" + "umh369.bin"
     file_name = "/music/" + random.choice(song_list)
     print("Playing %s" % file_name)
     f = open(file_name, "rb")
