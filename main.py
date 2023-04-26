@@ -30,9 +30,9 @@ wtf_digital_beep = 0.1
 buzzers = [
     PWM(Pin(0)),  # PWM_A[0]
     PWM(Pin(3)),  # PWM_B[1]
-    PWM(Pin(15)), # PWM_B[7]
+    PWM(Pin(6)),  # PWM_A[3]
     PWM(Pin(11)), # PWM_B[5]
-    #PWM_A[3]
+    PWM(Pin(15)), # PWM_B[7]
 ]
 
 buzzer_leds = [
@@ -40,7 +40,7 @@ buzzer_leds = [
     PWM(Pin(18)),  # PWM_A[1] White LED w/ 15 Ohm Resistor
     PWM(Pin(20)),  # PWM_A[2] Blue LED w/ 15 Ohm Resistor
     PWM(Pin(21)),  # PWM_B[2] Yellow LED w/ 47 Ohm Resistor
-    PWM(Pin(26))  # PWM_A[5] Green LED w/ 15 Ohm Resistor
+    PWM(Pin(26))   # PWM_A[5] Green LED w/ 15 Ohm Resistor
 ]
 
 led_state = [
@@ -56,9 +56,9 @@ led = Pin(25, Pin.OUT)
 def play_tick():
     for buzzer in buzzers:
         buzzer.duty_u16(1000)
-        buzzer.freq(1000)
+        buzzer.freq(1000) 
     
-    sleep(medium_digital_beep)
+    sleep(0.001)
     
     for buzzer in buzzers:
         buzzer.duty_u16(0)
@@ -67,9 +67,8 @@ def toggle_leds():
     led.toggle();
     for i, l in enumerate(buzzer_leds):
         if led_state[i] == 0:
-            print ('light on')
             l.freq(1000)
-            l.duty_u16(65025)
+            l.duty_u16(500)
             led_state[i] = 1
         else:
             l.duty_u16(0)
@@ -88,10 +87,10 @@ def play_midi(song_list):
     midi = RPMidi() # Instantiate RPMidi
     
     # Pick a random midi from list
-    file_name = random.choice(song_list)
-    full_path = "/music/" + file_name
-    print("Playing %s" % full_path)
-    f = open(full_path, "rb")
+    #file_name = "/music/" + "The-Flight-Of-The-Bumble-Bee.bin"
+    file_name = "/music/" + random.choice(song_list)
+    print("Playing %s" % file_name)
+    f = open(file_name, "rb")
     midi.play_song(f)
     
 def generate_song_list():
@@ -114,7 +113,6 @@ def main():
     
     #Generate list of songs to play
     song_list=generate_song_list()
-
     ## Loop
     while True:
         t = time.localtime()
@@ -130,7 +128,6 @@ def main():
             print_time(t)
         if min != old_min:
             old_min = min
-            #print("min updated")
         if hr != old_hr:
             old_hr = hr
             play_midi(song_list)
@@ -141,5 +138,5 @@ def main():
         sleep(1)
         toggle_leds()
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+main()
